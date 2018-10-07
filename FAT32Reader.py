@@ -61,6 +61,7 @@ class BPBReader32(BPBReader):
         with open(FAT32_path, "rb") as f:
             f.seek(36)
             self.get_fat32_bpb_structure(f)
+        self.FirstDataSector = int.from_bytes(self.ResvdSecCnt, byteorder="little") +(int.from_bytes(self.NumFATs, byteorder="little")*int.from_bytes(self.FATSz32, byteorder="little"))
         self.DataSec = int.from_bytes(self.TotSec32, byteorder="little") -\
                        (int.from_bytes(self.ResvdSecCnt, byteorder="little")
                         + int.from_bytes(self.NumFATs, byteorder="little")*int.from_bytes(self.FATSz32, byteorder="little"))
